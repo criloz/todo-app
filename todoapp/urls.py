@@ -13,11 +13,13 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
+from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from rest_framework import routers, serializers, viewsets
 from .models import Task
 from django.views.generic import  TemplateView
+from todoapp import settings
+
 
 # Serializers define the API representation.
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
@@ -45,3 +47,7 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^$', IndexView.as_view())
 ]
+
+urlpatterns += patterns('',
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATICFILES_DIRS[0]}),
+    )
