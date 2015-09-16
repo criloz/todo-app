@@ -1,0 +1,40 @@
+<div ng-controller="TodoController">
+
+            <md-content class="md-padding">
+        <form ng-submit="addTodo()">
+            <div layout="row" layout-align-gt-sm="center center">
+                <md-input-container flex="45">
+                    <label>Add todo item</label>
+                    <input ng-model="todoText" placeholder="Todo item">
+
+                </md-input-container>
+                <md-datepicker ng-model="due_date" md-placeholder="Due date"></md-datepicker>
+                <md-input-container>
+                    <md-button type="submit" class="md-fab" aria-label="Add todo items">
+                        <md-icon md-svg-icon="add"></md-icon>
+                    </md-button>
+                </md-input-container>
+            </div>
+        </form>
+
+        <div>
+            <div flex layout layout-align="end end" class="listHeader">
+                {{remaining()}} of {{todos.length}} remaining</span>
+                [<a href="" ng-click="archive()">Archive</a>]
+            </div>
+            <ul>
+                <li ng-repeat="todo in todos">
+                    <div layout="row task-row">
+                        <md-checkbox ng-model="todo.completed" ng-click="change_done(todo.pk, todo.completed)" aria-label="Todo Checkbox"></md-checkbox>
+                        <span class="task_filed" flex="45"> {{todo.description}}</span>
+                        <span class="task_filed">  {{todo.due_date}}</span>
+
+                    </div>
+                    <hr>
+                </li>
+            </ul>
+        </div>
+
+
+    </md-content>
+</div>
