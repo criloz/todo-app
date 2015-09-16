@@ -120,5 +120,7 @@ ALLOWED_HOSTS = ['*']
 
 DATABASES['default'] = dj_database_url.config()
 
-
-from local_settings import *
+try:
+    from local_settings import *
+except:
+    pass
