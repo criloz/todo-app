@@ -1,17 +1,5 @@
 angular.module('todoApp', ['ui.router', 'restangular', 'ngMaterial']);
-
 angular.module('todoApp').controller('TodoController', ['$scope', 'Restangular', function($scope, Restangular) {
-
-        var formattedDate = function(date) {
-            var d = new Date(date || Date.now()),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
-
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-            return [year, month, day].join('-');
-        };
 
         var TaskApi = Restangular.all('/api/tasks/');
 
@@ -22,7 +10,6 @@ angular.module('todoApp').controller('TodoController', ['$scope', 'Restangular',
 
         };
 
-
         $scope.todos = [];
         $scope.due_date = "";
         loadTasks();
@@ -30,7 +17,7 @@ angular.module('todoApp').controller('TodoController', ['$scope', 'Restangular',
 
         $scope.addTodo = function() {
             var save = null;
-            if (($scope.due_date != null) && ($scope.due_date != undefined)) {
+            if (($scope.due_date != null) && ($scope.due_date != undefined) && ($scope.due_date!="")) {
                 save = TaskApi.post({
                     description: $scope.todoText,
                     due_date: formattedDate($scope.due_date)
@@ -53,7 +40,7 @@ angular.module('todoApp').controller('TodoController', ['$scope', 'Restangular',
         $scope.remaining = function() {
             var count = 0;
             angular.forEach($scope.todos, function(todo) {
-                count += todo.done ? 0 : 1;
+                count += todo.completed ? 0 : 1;
             });
             return count;
         };
